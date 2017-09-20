@@ -1,0 +1,30 @@
+<!--index.wxml-->
+<import src="../../templates/toast.wxml"/>
+<view class="container">
+  <view class="header"><text>{{stuffName}}</text></view>
+  <view class="item" data-index="{{index}}" bindtap="bindItemTap" wx:for="{{list}}" wx:key="*this">
+    <view class="title">
+      <view class="icon-cover-view"><image class="icon-cover" src="{{item.type == 'mp3' ? '/assets/mp3.png' : '/assets/pdf.png'}}" /></view>
+      <text>{{item.attach_name}}</text>
+    </view>
+    <view class="icon-view"><image class="icon-playing" src="/assets/playing.gif" wx-if="{{dataIndex == index && isPlaying}}"/></view>  
+  </view>
+  <view class="player">
+    <view class="player-process">
+      <text class="player-timer">{{current}}</text>
+      <slider class="player-slider" bindchange="bindSliderChange" value="{{step}}" disabled="{{dataUrl == ''}}" />
+      <text class="player-timer">{{total}}</text>
+    </view>
+    <view class="player-main">
+      <image class="cover" src="/assets/player.png" mode="aspectFill" />
+      <view class="title"><text>{{title || 'JF名师工作室'}}</text></view>
+      <view class="operation">
+        <image class="icon-cycle" src="{{isCycle ? '/assets/single.svg' : '/assets/loop.svg'}}" bindtap="bindCycleTap"/>
+        <image class="icon-operation" src="/assets/prev.svg" bindtap="prev"/>
+        <image class="icon-play" src="{{isPlaying ? '/assets/pause.svg' : '/assets/play.svg'}}" bindtap="bindPlayTap"/>
+        <image class="icon-operation" src="/assets/next.svg" bindtap="next"/>
+      </view>
+    </view> 
+  </view>
+  <template is="toast" data="{{toast}}"/>
+</view>

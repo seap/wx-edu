@@ -1,0 +1,23 @@
+<import src="../../templates/toast.wxml"/>
+<view class="container">
+  <view class="field">
+    <view>当前班级</view>
+    <picker class="dataPicker" bindchange="bindClassChange" range-key="clazz_name" value="{{classIndex}}" range="{{classList}}">
+      <view>
+        {{classList[classIndex].clazz_name}}
+      </view>
+    </picker>
+  </view>
+  <view class="item" data-index="{{index}}" bindtap="bindItemTap" wx:for="{{stuffList}}" wx:key="*this">
+    <image class="icon" src="/assets/folder.png" />
+    <view class="title">
+      <text class="name">{{item.stuff_name}}</text>
+      <text class="date">{{item.stuffDate}}</text>
+    </view>
+  </view>
+  <view class="empty" wx-if="{{stuffList.length == 0}}">
+    <image src="/assets/empty.png" />
+    <text>当前班级尚未发布材料</text>
+  </view>
+  <template is="toast" data="{{toast}}"/>
+</view>

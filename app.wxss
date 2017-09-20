@@ -1,0 +1,42 @@
+/**app.wxss**/
+
+.toast {
+  position: fixed;
+  width: 100%;
+  left: 0;
+  bottom: 55%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -moz-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  z-index: 99;
+}
+
+.toast .content {
+  max-width: 90%;
+  padding: 10rpx 15rpx;
+  border-radius: 10rpx;
+  background: rgba(0, 0, 0, .7);
+  font-size: 30rpx;
+  color: #fff;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 160rpx;
+  color: #8a8a8a;
+  font-size: 24rpx;
+}
+.empty image {
+  width: 128rpx;
+  height: 128rpx;
+  margin-bottom: 20rpx;
+}
