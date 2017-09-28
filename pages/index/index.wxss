@@ -1,0 +1,108 @@
+page {
+  background-color: #f0f0f0;
+  font-size: 30rpx;
+  color: #131313;
+}
+
+.container {
+  height: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+}
+
+.userinfo-avatar {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+.userinfo-nickname {
+  color: #aaa;
+}
+
+.shortcut {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #fff;
+  margin-top: 20rpx;
+  box-sizing: border-box;
+}
+
+.shortcut .cell {
+  display: flex;
+  align-items: center;
+  width: 50%;
+  height: 120rpx;
+  box-sizing: border-box;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.shortcut .leftCell {
+  border-right: 1rpx solid #f0f0f0;
+}
+
+.shortcut .cell image {
+  margin: 0 20rpx;
+  width: 64rpx;
+  height: 64rpx;
+}
+
+.shortcut .cell .content {
+  display: flex;
+  flex-direction: column;
+}
+
+.shortcut .cell .content .subtitle {
+  font-size: 24rpx;
+  color: #707070;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  margin-top: 20rpx;
+  color: #707070;
+}
+
+.list .item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 90rpx;
+  line-height: 90rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.list .item .icon {
+  display: flex;
+  height: 90rpx;
+}
+.list .item .icon image {
+  width: 50rpx;
+  height: 50rpx;
+  margin: 20rpx;
+}
+
+.list .item .enter {
+  width: 30rpx;
+  height: 30rpx;
+  margin: 20rpx;
+}

@@ -1,0 +1,12 @@
+<!--index.wxml-->
+<import src="../../templates/toast.wxml"/>
+<view class="container">
+  <view class="header">
+    <view class="name">{{name}}</view>
+    <view class="date">{{createDate}}</view>
+  </view>
+  <view class="content">
+    <rich-text nodes="{{context}}" ></rich-text>
+  </view>
+  <template is="toast" data="{{toast}}"/>
+</view>

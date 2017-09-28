@@ -90,6 +90,7 @@ page {
 .player-timer {
   padding: 0 20rpx;
   font-size: 24rpx;
+  color: #ccc;
 }
 .player-slider {
   flex: 1
@@ -111,20 +112,22 @@ page {
 }
 
 .player-main .title {
+  display: block;
   flex: 1;
+  width: 320rpx;
   overflow: hidden;
 }
 
-.player-main .title text {
+.player-main .title .title-playing {
   display: block;
   white-space: nowrap;
   letter-spacing: 0;
-  animation: marquee 10s linear infinite;
+  animation: marquee 18s linear infinite;
 }
 
 .player-main .operation {
-  width: 260rpx;
-  padding: 0 40rpx;
+  width: 300rpx;
+  padding: 0 20rpx;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -150,6 +153,13 @@ page {
 .player .icon-operation {
   width: 20rpx;
   height: 24rpx;
+}
+.player .operation view {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  height: 120rpx;
 }
 
 .player .name {

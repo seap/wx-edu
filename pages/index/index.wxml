@@ -1,0 +1,35 @@
+<!--pages/index/index.js.wxml-->
+<view class="container">
+  <view class="userinfo">
+    <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+    <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+  </view>
+  <view class="shortcut">
+    <view 
+      class="cell {{index % 2 == 0 ? 'leftCell' : ''}}" 
+      wx:for="{{shortcuts}}" 
+      wx:key="*this"
+      data-link="{{item.link}}"
+      bindtap="bindShortCutTap"
+    >
+      <image src="{{item.image}}" />
+      <view class="content">
+        <view>{{item.name}}</view>
+        <view class="subtitle">{{item.desc}}</view>
+      </view>
+    </view>
+  </view>
+  <view class="list">
+    <view 
+      class="item"  
+      wx:for="{{linkList}}" 
+      wx:key="*this"
+    >
+      <view class="icon">
+        <image src="{{item.image}}" />
+        <text>{{item.name}}</text>
+      </view>
+      <image class="enter" src="/assets/enter.png" />
+    </view>
+  </view>
+</view>

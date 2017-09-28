@@ -7,22 +7,23 @@
       <view class="icon-cover-view"><image class="icon-cover" src="{{item.type == 'mp3' ? '/assets/mp3.png' : '/assets/pdf.png'}}" /></view>
       <text>{{item.attach_name}}</text>
     </view>
-    <view class="icon-view"><image class="icon-playing" src="/assets/playing.gif" wx-if="{{dataIndex == index && isPlaying}}"/></view>  
+    <view class="icon-view"><image class="icon-playing" src="/assets/playing.gif" wx-if="{{item.attach_url == dataUrl && status == 1}}"/></view>  
   </view>
   <view class="player">
     <view class="player-process">
       <text class="player-timer">{{current}}</text>
-      <slider class="player-slider" bindchange="bindSliderChange" value="{{step}}" disabled="{{dataUrl == ''}}" />
+      <slider class="player-slider" bindchange="bindSliderChange" value="{{step}}" disabled="{{status == 2}}" />
       <text class="player-timer">{{total}}</text>
     </view>
     <view class="player-main">
       <image class="cover" src="/assets/player.png" mode="aspectFill" />
-      <view class="title"><text>{{title || 'JF名师工作室'}}</text></view>
+      <text class="title" wx:if="{{status !== 2}}"><text class="title-playing">{{title}}</text></text>
+      <text class="title" wx:else><text>JF名师工作室</text></text>
       <view class="operation">
-        <image class="icon-cycle" src="{{isCycle ? '/assets/single.svg' : '/assets/loop.svg'}}" bindtap="bindCycleTap"/>
-        <image class="icon-operation" src="/assets/prev.svg" bindtap="prev"/>
-        <image class="icon-play" src="{{isPlaying ? '/assets/pause.svg' : '/assets/play.svg'}}" bindtap="bindPlayTap"/>
-        <image class="icon-operation" src="/assets/next.svg" bindtap="next"/>
+        <view bindtap="bindCycleTap"><image class="icon-cycle" src="{{cycle == 0 ? '/assets/cycle-0.png' : (cycle == 1 ? '/assets/cycle.svg' : '/assets/single.svg')}}" /></view>
+        <view bindtap="prev"><image class="icon-operation" src="/assets/prev.svg" /></view>
+        <view bindtap="bindPlayTap"><image class="icon-play" src="{{status == 1 ? '/assets/pause.svg' : '/assets/play.svg'}}" /></view>
+        <view bindtap="next"><image class="icon-operation" src="/assets/next.svg" /></view>
       </view>
     </view> 
   </view>

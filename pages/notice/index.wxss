@@ -60,6 +60,7 @@ page {
   height: 120rpx;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .item .name {

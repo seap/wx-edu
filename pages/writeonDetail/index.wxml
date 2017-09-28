@@ -1,0 +1,17 @@
+<!--index.wxml-->
+<import src="../../templates/toast.wxml"/>
+<view class="container">
+  <view class="header">
+    <view class="name">{{writeonName}}</view>
+    <view class="date">{{createDate}}</view>
+  </view>
+  <view class="content">
+    <rich-text nodes="{{content}}"></rich-text>
+    <view class="imageList">
+      <view class="item" data-index="{{index}}" bindtap="bindItemTap" wx:for="{{list}}" wx:key="*this">
+        <image src="{{item.attach_url_small}}" mode="scaleToFill"/>   
+      </view> 
+    </view>
+  </view>
+  <template is="toast" data="{{toast}}"/>
+</view>

@@ -1,15 +1,16 @@
 const request = require('../../common/request')
-const { parseSecond } = require('../../common/util')
+const player = getApp().player
 
 Page({
   data: {
     stuffName: '',
     list: [],
-    isPlaying: false,
+    playlist: [],
+    status: 2, // 2：没有音乐在播放，1：播放中，0：暂停中
     title: '',
     dataUrl: '',
-    dataIndex: -1,
-    isCycle: false, // 0: all, 1: single
+    playIndex: -1,
+    cycle: 0, // 0: no cycle, 1: all, 2: single
     duration: 0,
     step: 0, // slider的步数
     total: '00:00',
@@ -31,12 +32,24 @@ Page({
     request({
       url: `http://w.jenniferstudio.cn/webservice/student/query_stuff_info?openId=onhx6xBFsBnkS3-FPqtp1VZ3YM9U&stuffId=${stuffId}`,
       success: json => {
+        let audioIndex = 0, pdfIndex = 0
+        const list = json.data.stuff_attach.map(ele => {
+          ele.dataUrl = ele.attach_url
+          ele.title = ele.attach_name
+          if (/mp3/.test(ele.attach_type)) {
+            ele.type = 'mp3'
+            ele.audioIndex = audioIndex++
+          } else {
+            ele.type = 'pdf'
+            ele.pdfIndex = pdfIndex++
+          }
+          return ele
+        })
+        const playlist = list.filter(ele => ele.type == 'mp3')
         this.setData({
           stuffName: json.data.stuff_name,
-          list: json.data.stuff_attach.map(ele => {
-            ele.type = /mp3/.test(ele.attach_type) ? 'mp3' : 'pdf'
-            return ele
-          })
+          list,
+          playlist
         })
       }
     })
@@ -48,11 +61,7 @@ Page({
       return
     }
     if (item.type == 'mp3') {
-      this.play({
-        dataIndex: index,
-        dataUrl: item.attach_url,
-        title: item.attach_name
-      })
+      player.play(item.audioIndex, this.data.playlist)
     } else {
       this.openPdf(item.attach_url)
     }
@@ -83,169 +92,47 @@ Page({
     })
   },
   bindSliderChange: function(e) {
-    const step = e.detail.value
-    const { duration } = this.data
-    if (duration > 0) {
-      wx.seekBackgroundAudio({
-        position: parseInt(step * duration / 100),
-      })
+    player.seek(e.detail.value, step => {
       this.setData({
         step
       })
-    }
+    })
   },
   bindPlayTap: function(e) {
-    const { isPlaying, title, dataUrl } = this.data
-    if (isPlaying) {
-      this.pause()
+    const { status } = this.data
+    if (status == 0) {
+      player.play()
+    } else if(status == 1) {
+      player.pause()
     } else {
-      if (dataUrl) {
-        this.play({ title, dataUrl })
-      } else {
-        this.showToast('请选择播放的音频')
-      }
+      this.showToast('请选择播放的音频')  
     }
   },
   bindCycleTap: function (e) {
-    const { isCycle } = this.data
+    const cycle = (this.data.cycle + 1) % 3
+    player.cycle(cycle)
     this.setData({
-      isCycle: !isCycle
-    })
-  },
-  play: function(audio){
-    wx.playBackgroundAudio({
-      ...audio,
-      success: res => {
-        wx.setStorage({
-          key: 'audio',
-          data: audio
-        })
-        this.setData({
-          isPlaying: true,
-          ...audio
-        })
-      }, 
-      fail: err => {
-        this.showToast('播放文件失败')
-      }
-    })
-  },
-  onPlay: function() {
-    console.log('onPlay.....')
-    this.interval = setInterval(() => {
-      wx.getBackgroundAudioPlayerState({
-        success: obj => {
-          console.log('state: ', obj)
-          try {
-            const { status, currentPosition, dataUrl, duration } = obj
-            if (status == 2) {
-              return
-            }
-            let { title } = this.data
-            const step = parseInt((currentPosition / duration) * 100)
-            if (title == '') {
-              const audio = wx.getStorageSync('audio')
-              if (audio) {
-                title = audio.title
-              }
-            }
-            this.setData({
-              isPlaying: status == 1,
-              current: parseSecond(currentPosition),
-              total: parseSecond(duration),
-              duration,
-              step,
-              title,
-              dataUrl
-            })
-          } catch (error) {
-            console.log(error)
-            this.showToast('播放异常')
-          }
-          // const { list } = this.data
-          // for (let i = 0; i <= list.length; i++) {
-          //   if (list[i].attach_url == dataUrl) {
-          //     this.setData({
-          //       dataIndex: i,
-          //       dataUrl,
-          //       title: list[i].attach_name
-          //     })
-          //     break
-          //   }
-          // }
-
-        }
-      })
-    }, 1000)
-  },
-  pause: function() {
-    wx.pauseBackgroundAudio()
-  },
-  onPause: function() {
-    this.setData({
-      isPlaying: false
+      cycle
+    }, () => {
+      this.showToast(cycle == 0 ? '取消循环' : cycle == 1 ? '全曲循环' : '单曲循环')  
     })
   },
   prev: function() {
-    const { dataIndex, list } = this.data
-    const nextIndex = (dataIndex <= 0) ? list.length - 1 : dataIndex - 1
-    const item = list[nextIndex]
-    if (!item || !item.attach_url || item.type !== 'mp3') {
-      this.setData({
-        dataIndex: nextIndex
-      })
-      return
-    }
-    this.play({
-      dataIndex: nextIndex,
-      dataUrl: item.attach_url,
-      title: item.attach_name
-    })
+    player.prev()
   },
   next: function() {
-    const { dataIndex, list } = this.data
-    const nextIndex = (dataIndex == list.length - 1) ? 0 : dataIndex + 1
-    const item = list[nextIndex]
-    if (!item || !item.attach_url || item.type !== 'mp3') {
-      this.setData({
-        dataIndex: nextIndex
-      })
-      return
-    }
-    this.play({
-      dataIndex: nextIndex,
-      dataUrl: item.attach_url,
-      title: item.attach_name
-    })
-  },
-  onStop: function(res) {
-    console.log('stop: ', this)
-    const { isCycle, index, list, title, dataUrl } = this.data
-    if (isCycle) {
-      // 单曲循环
-      this.play({ title, dataUrl })
-    } else {
-      // 下一首
-      // this.next()
-    }
-    // this.setData({
-    //   step: 0,
-    //   isPlaying: false
-    // })
+    player.next()
   },
   onLoad: function(options) {
     this.fetchData(options.id)
-    // wx.onBackgroundAudioPlay(this.onPlay)
-    wx.onBackgroundAudioPause(this.onPause)
-    wx.onBackgroundAudioStop(this.onStop)
+    player.addPlayerListener(data => {
+      this.setData(data)
+    })
   },
-  onShow: function() {    
-    this.onPlay()
-  }, 
-  onHide: function() {
-    if (this.interval) {
-      clearInterval(this.interval)
-      this.interval = null
-    }
+  onShow: function() {
+    
+  },
+  onUnload: function() {
+    player.removePlayerListener()
   }
 })

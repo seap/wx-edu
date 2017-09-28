@@ -8,16 +8,16 @@
       </view>
     </picker>
   </view>
-  <view class="item" data-index="{{index}}" bindtap="bindItemTap" wx:for="{{stuffList}}" wx:key="*this">
-    <view class="icon"><image src="/assets/folder.png" /></view>
+  <view class="item" data-index="{{index}}" bindtap="bindItemTap" wx:for="{{list}}" wx:key="*this">
+    <view class="icon"><image src="/assets/index/message.png" /></view>
     <view class="title">
-      <text class="name">{{item.stuff_name}}</text>
-      <text class="date">{{item.stuffDate}}</text>
+      <text class="name">{{item.name}}</text>
+      <text class="date">{{item.createDate}}</text>
     </view>
   </view>
-  <view class="empty" wx-if="{{stuffList.length == 0}}">
+  <view class="empty" wx-if="{{list && list.length == 0}}">
     <image src="/assets/empty.png" />
-    <text>当前班级尚未发布材料</text>
+    <text>当前班级尚未发布通告</text>
   </view>
   <template is="toast" data="{{toast}}"/>
 </view>
