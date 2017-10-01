@@ -9,10 +9,10 @@
     </picker>
   </view>
   <view class="item" data-index="{{index}}" bindtap="bindItemTap" wx:for="{{list}}" wx:key="*this">
-    <view class="icon"><image src="/assets/index/message.png" /></view>
-    <view class="title">
-      <text class="name">{{item.name}}</text>
-      <text class="date">{{item.createDate}}</text>
+    <view class="item-icon item-icon-notice"><image src="/assets/index/notice-list.png" /></view>
+    <view class="item-content">
+      <text class="item-title">{{item.name}}</text>
+      <text class="item-subtitle">{{item.createDate}}</text>
     </view>
   </view>
   <view class="empty" wx-if="{{list && list.length == 0}}">

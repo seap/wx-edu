@@ -5,14 +5,22 @@ Page({
     userInfo: null,
     shortcuts: [
       { name: '班级通告', desc: '班级通知通告', image: '/assets/index/message.png', link: '/pages/notice/index' }, 
-      { name: '我的作业', desc: '课程作业批注', image: '/assets/index/task.png', link: '' },      
+      { name: '我的作业', desc: '课程作业批注', image: '/assets/index/task.png', link: '/pages/task/index' },      
       { name: '课程板书', desc: '课程介绍板书', image: '/assets/index/writeon.png', link: '/pages/writeon/index' },
       { name: '辅导材料', desc: '课程辅导材料 ', image: '/assets/index/resource.png', link: '/pages/stuff/index' }
     ],
     linkList: [
+      { name: '个人信息', image: '/assets/user.png', link: '/pages/my/index' },
       { name: '修改密码', image: '/assets/password.png', link: '' },
-      { name: '修改手机号', image: '/assets/mobile.png', link: '' }
+      { name: '修改手机', image: '/assets/mobile.png', link: '' },
+      { name: '班级报名', image: '/assets/register.png', link: '' }
     ]
+  },
+  showToast: function (toast, duration = 1500) {
+    this.setData({ toast })
+    setTimeout(() => {
+      this.setData({ toast: '' })
+    }, duration)
   },
 
   bindStuff: function() {
@@ -22,9 +30,24 @@ Page({
   },
   bindShortCutTap: function(e) {
     const { link } = e.currentTarget.dataset
-    link && wx.navigateTo({
-      url: link
-    })
+    if (link) {
+      wx.navigateTo({
+        url: link
+      }) 
+    } else {
+      this.showToast('敬请期待')
+    }
+  },
+
+  bindLinkListTap: function(e) {
+    const { link } = e.currentTarget.dataset
+    if (link) {
+      wx.navigateTo({
+        url: link
+      }) 
+    } else {
+      this.showToast('敬请期待')
+    }
   },
 
   onLoad: function (options) {

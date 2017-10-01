@@ -1,0 +1,65 @@
+<import src="../../templates/toast.wxml"/>
+<view class="container">
+  <view class="header">
+    <view class="name">{{task_name}}</view>
+    <view class="date">{{createDate}}</view>
+  </view>
+  <view class="content">
+    <rich-text nodes="{{task_content}}" ></rich-text>
+  </view>
+  
+  <view class="voice-header">
+    <text class="voice-header-title">我的作业</text>
+  </view>
+  <view class="voice-item" data-filepath="{{item.student_answer}}" wx:for="{{student_answers}}" wx:key="*this" bindtap="bindRemoteFileTap">
+    <view class="voice-item-icon">
+      <image src="/assets/voice.png" />
+    </view>
+    <view class="voice-item-name">{{item.name}}</view>
+    <view wx-if="{{status == 'nocom'}}" class="voice-item-icon" data-index="{{index}}" catchtap="removeLocalFile">
+      <image src="/assets/delete.png" />
+    </view>
+  </view>
+  <view class="voice-item" data-filepath="{{item.filePath}}" wx:for="{{localFiles}}" wx:key="*this" bindtap="bindLocalFileTap">
+    <view class="voice-item-icon">
+      <image src="/assets/voice.png" />
+    </view>
+    <view class="voice-item-name">{{item.name}}</view>
+    <view wx-if="{{status == 'nocom'}}" class="voice-item-icon" data-index="{{index}}" catchtap="removeLocalFile">
+      <image src="/assets/delete.png" />
+    </view>
+  </view>
+
+  <block wx-if="{{status == 'compl'}}">
+    <view class="voice-header">
+      <text class="voice-header-title">老师批改</text>
+    </view>
+    <view class="voice-item" data-filepath="{{teacher_corre}}" bindtap="bindRemoteFileTap">
+      <view class="voice-item-icon">
+        <image src="/assets/voice.png" />
+      </view>
+      <view class="voice-item-name">批改语音</view>
+    </view>
+    <view class="text-item">
+      <text>评分</text>
+      <text>{{score}}</text>
+    </view>
+    <view class="text-item">
+      <text>备注</text>
+      <text>{{corre_content}}</text>
+    </view>
+  </block>
+
+  <view class="operation" wx-if="{{status == 'nocom'}}" >
+    <view class="operation-button operation-record" bindtap="bindRecordTap">
+      <image class="operation-icon" src="{{ recording ? '/assets/recording.png' : '/assets/record.png' }}"/>
+      <text wx:if="{{recording}}" class="operation-stop">结束录音</text>
+      <text wx:else>开始录音</text>
+    </view>
+    <view class="operation-button operation-save" bindtap="saveTask">
+      <image class="operation-icon" src="/assets/save.png"/>
+      <text>保存作业</text>
+    </view>
+  </view>
+  <template is="toast" data="{{toast}}"/>
+</view>

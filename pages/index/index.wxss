@@ -74,7 +74,7 @@ page {
   color: #707070;
 }
 
-.list {
+.link-list {
   display: flex;
   flex-direction: column;
   background-color: #fff;
@@ -82,7 +82,7 @@ page {
   color: #707070;
 }
 
-.list .item {
+.link-list .link-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -91,17 +91,17 @@ page {
   border-bottom: 1rpx solid #f0f0f0;
 }
 
-.list .item .icon {
+.link-list .link-item .icon {
   display: flex;
   height: 90rpx;
 }
-.list .item .icon image {
+.link-list .link-item .icon image {
   width: 50rpx;
   height: 50rpx;
   margin: 20rpx;
 }
 
-.list .item .enter {
+.link-list .link-item .enter {
   width: 30rpx;
   height: 30rpx;
   margin: 20rpx;

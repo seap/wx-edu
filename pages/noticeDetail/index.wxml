@@ -2,8 +2,8 @@
 <import src="../../templates/toast.wxml"/>
 <view class="container">
   <view class="header">
-    <view class="name">{{name}}</view>
-    <view class="date">{{createDate}}</view>
+    <view class="header-title">{{name}}</view>
+    <view class="header-subtitle">{{createDate}}</view>
   </view>
   <view class="content">
     <rich-text nodes="{{context}}" ></rich-text>

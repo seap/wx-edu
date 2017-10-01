@@ -1,0 +1,62 @@
+<import src="../../templates/toast.wxml"/>
+<view class="container">
+  <view class="field">
+    <view>当前班级</view>
+    <picker class="dataPicker" bindchange="bindClassChange" range-key="clazz_name" value="{{classIndex}}" range="{{classList}}">
+      <view>
+        {{classList[classIndex].clazz_name}}
+      </view>
+    </picker>
+  </view>
+
+  <view class="tab">
+    <block wx:for="{{tabs}}" wx:key="index">
+      <text 
+        class="{{tabIndex == index ? 'tab-selected' : ''}}" 
+        bindtap="bindTabChange" 
+        data-id="{{index}}">{{item.name}}</text>
+    </block>
+    <view
+      class="moveLine"
+      style="left:{{linePosition || ''}}"
+    />
+  </view>
+
+  <block wx:if="{{tabIndex == 0}}">
+    <view class="item" data-id="{{item.task_id}}" bindtap="bindItemTap" wx:for="{{currentList}}" wx:key="*this">
+      <view class="item-icon {{ item.status === 'nocom' ? 'item-icon-task' : 'item-icon-task-submit' }}">
+        <image src="/assets/index/task-list.png" />
+      </view>
+      <view class="item-content">
+        <text class="item-title">{{item.task_name}}</text>
+        <text class="item-subtitle">{{item.createDate}}</text>
+      </view>
+      <view class="item-status">
+        {{item.status === 'nocom' ? '未提交' : '已提交'}}
+      </view>
+    </view>
+    
+    <view class="empty" wx-if="{{currentList && currentList.length == 0}}">
+      <image src="/assets/empty.png" />
+      <text>没有未完成的作业</text>
+    </view>
+  </block>
+
+  <block wx:if="{{tabIndex == 1}}">
+    <view class="item" data-id="{{item.task_id}}" bindtap="bindItemTap" wx:for="{{completedList}}" wx:key="*this">
+      <view class="item-icon item-icon-task-complete">
+        <image src="/assets/index/task-list.png" />
+      </view>
+      <view class="item-content">
+        <text class="item-title">{{item.task_name}}</text>
+        <text class="item-subtitle">{{item.createDate}}</text>
+      </view>
+    </view>
+    <view class="empty" wx-if="{{completedList && completedList.length == 0}}">
+      <image src="/assets/empty.png" />
+      <text>没有已批改的作业</text>
+    </view>
+  </block>
+
+  <template is="toast" data="{{toast}}"/>
+</view>

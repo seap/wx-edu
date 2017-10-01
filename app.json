@@ -6,7 +6,10 @@
     "pages/stuff/index",
     "pages/stuffDetail/index",
     "pages/writeon/index",
-    "pages/writeonDetail/index"
+    "pages/writeonDetail/index",
+    "pages/my/index",
+    "pages/task/index",
+    "pages/taskDetail/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

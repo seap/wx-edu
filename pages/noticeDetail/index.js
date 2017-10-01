@@ -23,7 +23,6 @@ Page({
     request({
       url: `${API_NOTICE_DETAIL}?openId=onhx6xBFsBnkS3-FPqtp1VZ3YM9U&noticeId=${id}`,
       success: json => {
-        console.log(json)
         this.setData({
           name: json.data.name,
           createDate: formatDate(new Date(json.data.create_date * 1000), 'yyyy-MM-dd hh:mm:ss'),

@@ -1,6 +1,7 @@
 const request = require('../../common/request')
-const { API_NOTICE, API_CLASS } = require('../../common/constants')
+const { API_NOTICE } = require('../../common/constants')
 const { formatDate } = require('../../common/util')
+const app = getApp()
 
 Page({
   data: {
@@ -8,13 +9,17 @@ Page({
     classList: [],
     list: null
   },
+  
   bindClassChange: function(e) {
     const index = e.detail.value
-    this.setData({
-      classIndex: index
-    })
-    this.fetchList(this.data.classList[index].clazz_id)
+    if (index !== this.data.classIndex) {
+      this.setData({
+        classIndex: index
+      })
+      this.fetchList(this.data.classList[index].clazz_id)
+    }
   },
+
   bindItemTap: function(e) {
     const { index } = e.currentTarget.dataset
     const item = this.data.list[index]
@@ -35,17 +40,19 @@ Page({
       }
     })
   },
-  onLoad: function() {
-    request({
-      url: `${API_CLASS}?openId=onhx6xBFsBnkS3-FPqtp1VZ3YM9U`,
-      success: json => {
-        this.setData({
-          classList: json.data
-        })
-        if (json.data[0]) {
-          this.fetchList(json.data[0].clazz_id)
-        }
-      }
+  initClassList: function(classList) {
+    this.setData({
+      classList
     })
+    if (classList[0]) {
+      this.fetchList(classList[0].clazz_id)
+    }
+  },
+  onLoad: function() {
+    if (app.globalData.classList) {
+      this.initClassList(app.globalData.classList)
+    } else {
+      app.classListCallback = this.initClassList
+    }
   }
 })

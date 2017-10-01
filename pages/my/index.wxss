@@ -1,0 +1,50 @@
+page {
+  background-color: #f0f0f0;
+  font-size: 30rpx;
+  color: #131313;
+}
+
+.container {
+  height: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.userinfo-header {
+  background-color: #26AB28;
+  color: #fff;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  margin-top: 20rpx;
+  padding: 0 20rpx;
+  color: #707070;
+}
+
+.list .item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 90rpx;
+  line-height: 90rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.list .item text {
+  min-width: 130rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

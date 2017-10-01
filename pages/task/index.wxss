@@ -1,0 +1,39 @@
+page {
+  background-color: #f0f0f0;
+}
+
+.tab {
+  position: relative;
+  display: flex;
+  width: 100%;
+  background: #fff;
+  margin-bottom: 1rpx;
+}
+
+.tab text {
+  flex: 1;
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 30rpx;
+  text-align: center;
+}
+
+.tab .tab-selected {
+  color: #1aad19;
+}
+
+.tab .moveLine {
+  position: absolute;
+  width: 50%;
+  bottom: 0;
+  left: 0;
+  height: 1rpx;
+  background: #1aad19;
+  transition: all ease .1s;
+}
+
+.item-status {
+  margin: 0 20rpx;
+  color: #666;
+  font-size: 28rpx;
+}

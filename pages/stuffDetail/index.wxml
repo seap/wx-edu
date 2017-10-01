@@ -1,10 +1,13 @@
 <!--index.wxml-->
 <import src="../../templates/toast.wxml"/>
 <view class="container">
-  <view class="header"><text>{{stuffName}}</text></view>
-  <view class="item" data-index="{{index}}" bindtap="bindItemTap" wx:for="{{list}}" wx:key="*this">
+  <view class="header">
+    <view class="header-title">{{stuffName}}</view>
+    <view class="header-subtitle">{{createDate}}</view>
+  </view>
+  <view class="text-item" data-index="{{index}}" bindtap="bindItemTap" wx:for="{{list}}" wx:key="*this">
     <view class="title">
-      <view class="icon-cover-view"><image class="icon-cover" src="{{item.type == 'mp3' ? '/assets/mp3.png' : '/assets/pdf.png'}}" /></view>
+      <view class="icon-cover-view"><image src="{{item.type == 'mp3' ? '/assets/mp3.png' : '/assets/pdf.png'}}" /></view>
       <text>{{item.attach_name}}</text>
     </view>
     <view class="icon-view"><image class="icon-playing" src="/assets/playing.gif" wx-if="{{item.attach_url == dataUrl && status == 1}}"/></view>  

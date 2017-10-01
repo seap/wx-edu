@@ -17,24 +17,7 @@ page {
   box-sizing: border-box;
 }
 
-.header {
-  padding: 0 20rpx;
-  margin-bottom: 20rpx;
-  height: 100rpx;
-  line-height: 100rpx;
-  background-color: #fff;
-  font-size: 30rpx;
-  color: #444;
-}
-
-.header text {
-  display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.item {
+.text-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -44,24 +27,24 @@ page {
   border-bottom: 1rpx solid #E6E6E6;
   font-size: 32rpx;
 }
-.item .title {
+.text-item .title {
   display: flex;
   align-items: center;
 }
 
-.item .icon-cover {
+.text-item .icon-cover-view {
+  display: flex;
+  align-items: center;
+}
+
+.text-item .icon-cover-view image {
   width: 64rpx;
   height: 64rpx;
   margin: 0 20rpx;
 }
 
-.item .icon-cover-view {
-  display: flex;
-  align-items: center;
-}
 
-
-.item .icon-playing {
+.text-item .icon-playing {
   width: 40rpx;
   height: 40rpx;
   margin: 0 20rpx;

@@ -1,4 +1,7 @@
 const request = require('../../common/request')
+const { API_STUFF_DETAIL } = require('../../common/constants')
+const { formatDate } = require('../../common/util')
+
 const player = getApp().player
 
 Page({
@@ -30,10 +33,11 @@ Page({
   },
   fetchData: function(stuffId) {
     request({
-      url: `http://w.jenniferstudio.cn/webservice/student/query_stuff_info?openId=onhx6xBFsBnkS3-FPqtp1VZ3YM9U&stuffId=${stuffId}`,
+      url: `${API_STUFF_DETAIL}?openId=onhx6xBFsBnkS3-FPqtp1VZ3YM9U&stuffId=${stuffId}`,
       success: json => {
         let audioIndex = 0, pdfIndex = 0
         const list = json.data.stuff_attach.map(ele => {
+          ele.attach_url = ele.attach_url.replace(/^http:/, 'https:')
           ele.dataUrl = ele.attach_url
           ele.title = ele.attach_name
           if (/mp3/.test(ele.attach_type)) {
@@ -48,6 +52,7 @@ Page({
         const playlist = list.filter(ele => ele.type == 'mp3')
         this.setData({
           stuffName: json.data.stuff_name,
+          createDate: formatDate(new Date(json.data.create_date * 1000), 'yyyy-MM-dd hh:mm:ss'),
           list,
           playlist
         })
@@ -71,20 +76,38 @@ Page({
     wx.downloadFile({
       url: pdf,
       success: res => {
+        const filePath = res.tempFilePath
+        const fileType = 'pdf'
         wx.openDocument({
-          filePath: res.tempFilePath,
+          filePath,
+          fileType,
           success: res => {
             console.log('打开文档成功')
           },
           fail: err => {
             console.log(err)
-            wx.showModal({ title: '打开文档失败' })
+            console.log('filePath: ', filePath)
+            wx.showModal({ 
+              title: '提示',
+              content: '打开文档失败，是否重试？',
+              success: res => {
+                if (res.confirm) {
+                  console.log('用户点击确定')
+                  // this.openPdf(pdf)
+                  wx.openDocument({
+                    filePath,
+                    fileType
+                  })
+                } else if (res.cancel) {
+                  console.log('用户点击取消')
+                }
+              }
+            })
           }
         })
       },
       fail: () => {
         wx.showModal({ title: '文件下载失败' })
-        // this.showToast('文件下载失败')
       },
       complete: () => {
         wx.hideLoading()
