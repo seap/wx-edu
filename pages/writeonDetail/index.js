@@ -11,11 +11,15 @@ Page({
     list: [],
     imageList: []
   },
-  interval: null,
+  toastCursor: 0,
   showToast: function (toast, duration = 1500) {
+    this.toastCursor++
     this.setData({ toast })
     setTimeout(() => {
-      this.setData({ toast: '' })
+      this.toastCursor--
+      if (this.toastCursor === 0) {
+        this.setData({ toast: '' })
+      }
     }, duration)
   },
   // 事件处理函数

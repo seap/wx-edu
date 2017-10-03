@@ -1,7 +1,7 @@
 page {
   background-color: #f0f0f0;
   font-size: 30rpx;
-  color: #131313;
+  color: #121212;
 }
 
 .container {
@@ -45,7 +45,7 @@ page {
   box-sizing: border-box;
 }
 
-.shortcut .cell {
+.shortcut .shortcut-cell {
   display: flex;
   align-items: center;
   width: 50%;
@@ -54,24 +54,25 @@ page {
   border-bottom: 1rpx solid #f0f0f0;
 }
 
-.shortcut .leftCell {
+.shortcut .shortcut-left-cell {
   border-right: 1rpx solid #f0f0f0;
 }
 
-.shortcut .cell image {
+.shortcut .shortcut-cell image {
   margin: 0 20rpx;
   width: 64rpx;
   height: 64rpx;
 }
 
-.shortcut .cell .content {
+.shortcut .shortcut-cell .content {
   display: flex;
   flex-direction: column;
 }
 
-.shortcut .cell .content .subtitle {
+.shortcut .shortcut-cell .content .subtitle {
+  line-height: 36rpx;
   font-size: 24rpx;
-  color: #707070;
+  color: #666;
 }
 
 .link-list {
@@ -79,7 +80,8 @@ page {
   flex-direction: column;
   background-color: #fff;
   margin-top: 20rpx;
-  color: #707070;
+  color: #666;
+  font-size: 28rpx;
 }
 
 .link-list .link-item {
@@ -93,11 +95,11 @@ page {
 
 .link-list .link-item .icon {
   display: flex;
-  height: 90rpx;
+  align-items: center;
 }
 .link-list .link-item .icon image {
-  width: 50rpx;
-  height: 50rpx;
+  width: 40rpx;
+  height: 40rpx;
   margin: 20rpx;
 }
 

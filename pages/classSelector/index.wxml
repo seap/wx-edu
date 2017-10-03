@@ -1,0 +1,9 @@
+<view class="class-item" data-index="{{index}}" bindtap="bindItemTap" wx:for="{{list}}" wx:key="*this">
+  <view class="class-item-value">
+    <view>{{item.clazz_name}}</view>
+    <view class="class-item-remain">剩余名额
+     <text class="class-item-remain-number">{{item.remain}}</text>
+    </view>
+  </view>
+  <image class="class-item-icon" src="/assets/enter.png" />
+</view>

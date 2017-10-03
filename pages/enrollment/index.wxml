@@ -1,0 +1,25 @@
+<import src="../../templates/toast.wxml"/>
+<view class="container">
+  <view class="field-item">
+    <text>学号</text>
+    <text class="field-item-value">{{member.student_no}}</text>
+  </view>
+  <view class="field-item">
+    <text>姓名</text>
+    <text class="field-item-value">{{member.student_name}}</text>
+  </view>
+  <view class="field-item" bindtap="bindClassSelectTap">
+    <text>班级</text>
+    <text wx:if="{{ classId == '' }}" class="field-item-value field-item-holder" >请选择班级</text>
+    <text wx:else class="field-item-value">{{className}}</text>
+    <image class="field-item-icon" src="/assets/enter.png" />
+  </view>
+  <view class="field-item-button">
+    <button 
+      type="primary" 
+      bindtap="bindSubmitTap"
+    >确认
+    </button>
+  </view>
+  <template is="toast" data="{{toast}}"/>
+</view>

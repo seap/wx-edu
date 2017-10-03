@@ -61,15 +61,16 @@ Page({
   },
 
   initClassList: function(classList) {
+    const { classIndex } = this.data
     this.setData({
       classList
     })
-    if (classList[0]) {
-      this.fetchList(classList[0].clazz_id)
+    if (classList[classIndex]) {
+      this.fetchList(classList[classIndex].clazz_id)
     }
   },
 
-  onLoad: function() {
+  onShow: function() {
     if (app.globalData.classList) {
       this.initClassList(app.globalData.classList)
     } else {

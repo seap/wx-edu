@@ -11,15 +11,20 @@ Page({
     ],
     linkList: [
       { name: '个人信息', image: '/assets/user.png', link: '/pages/my/index' },
-      { name: '修改密码', image: '/assets/password.png', link: '' },
-      { name: '修改手机', image: '/assets/mobile.png', link: '' },
-      { name: '班级报名', image: '/assets/register.png', link: '' }
+      { name: '修改密码', image: '/assets/password.png', link: '/pages/password/index' },
+      { name: '修改手机', image: '/assets/mobile.png', link: '/pages/phone/index' },
+      { name: '班级报名', image: '/assets/register.png', link: '/pages/enrollment/index' }
     ]
   },
+  toastCursor: 0,
   showToast: function (toast, duration = 1500) {
+    this.toastCursor++
     this.setData({ toast })
     setTimeout(() => {
-      this.setData({ toast: '' })
+      this.toastCursor--
+      if (this.toastCursor === 0) {
+        this.setData({ toast: '' })
+      }
     }, duration)
   },
 

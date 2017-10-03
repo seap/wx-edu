@@ -8,47 +8,47 @@
     <rich-text nodes="{{task_content}}" ></rich-text>
   </view>
   
-  <view class="voice-header">
-    <text class="voice-header-title">我的作业</text>
+  <view class="text-item text-item-header">
+    <view class="text-item-icon"><image src="/assets/student.png"/></view>
+    <text>学生回答</text>
   </view>
-  <view class="voice-item" data-filepath="{{item.student_answer}}" wx:for="{{student_answers}}" wx:key="*this" bindtap="bindRemoteFileTap">
-    <view class="voice-item-icon">
-      <image src="/assets/voice.png" />
-    </view>
-    <view class="voice-item-name">{{item.name}}</view>
-    <view wx-if="{{status == 'nocom'}}" class="voice-item-icon" data-index="{{index}}" catchtap="removeLocalFile">
+  <view class="text-item" data-filepath="{{item.student_answer}}" wx:for="{{student_answers}}" wx:key="*this" bindtap="bindRemoteFileTap">
+    <view class="text-item-icon"><image src="/assets/voice.png" /></view>
+    <text class="text-item-name">{{item.name}}</text>
+    <view wx-if="{{status == 'nocom'}}" class="text-item-icon" data-index="{{index}}" catchtap="removeRemoteFile">
       <image src="/assets/delete.png" />
     </view>
   </view>
-  <view class="voice-item" data-filepath="{{item.filePath}}" wx:for="{{localFiles}}" wx:key="*this" bindtap="bindLocalFileTap">
-    <view class="voice-item-icon">
-      <image src="/assets/voice.png" />
-    </view>
-    <view class="voice-item-name">{{item.name}}</view>
-    <view wx-if="{{status == 'nocom'}}" class="voice-item-icon" data-index="{{index}}" catchtap="removeLocalFile">
+  <view class="text-item" data-filepath="{{item.filePath}}" wx:for="{{localFiles}}" wx:key="*this" bindtap="bindLocalFileTap">
+    <view class="text-item-icon"><image src="/assets/voice.png" /></view>
+    <text class="text-item-name">{{item.name}} (本地)</text>
+    <view wx-if="{{status == 'nocom'}}" class="text-item-icon" data-index="{{index}}" catchtap="removeLocalFile">
       <image src="/assets/delete.png" />
     </view>
   </view>
 
   <block wx-if="{{status == 'compl'}}">
-    <view class="voice-header">
-      <text class="voice-header-title">老师批改</text>
+    <view class="text-item text-item-header">
+      <view class="text-item-icon"><image src="/assets/teacher.png"/></view>
+      <text>老师批改</text>
     </view>
-    <view class="voice-item" data-filepath="{{teacher_corre}}" bindtap="bindRemoteFileTap">
-      <view class="voice-item-icon">
-        <image src="/assets/voice.png" />
-      </view>
-      <view class="voice-item-name">批改语音</view>
+    <view class="text-item" data-filepath="{{teacher_corre}}" bindtap="bindRemoteFileTap">
+      <view class="text-item-icon"><image src="/assets/voice.png" /></view>
+      <text>批改语音</text>
     </view>
     <view class="text-item">
+      <view class="text-item-icon"><image src="/assets/score.png"/></view>
       <text>评分</text>
-      <text>{{score}}</text>
+      <text class="text-item-value">{{score}}</text>
     </view>
     <view class="text-item">
+      <view class="text-item-icon"><image src="/assets/remark.png"/></view>
       <text>备注</text>
-      <text>{{corre_content}}</text>
+      <text class="text-item-value">{{corre_content}}</text>
     </view>
   </block>
+
+  <view class="task-placeholder" wx-if="{{status == 'nocom'}}"></view>
 
   <view class="operation" wx-if="{{status == 'nocom'}}" >
     <view class="operation-button operation-record" bindtap="bindRecordTap">
@@ -56,9 +56,13 @@
       <text wx:if="{{recording}}" class="operation-stop">结束录音</text>
       <text wx:else>开始录音</text>
     </view>
-    <view class="operation-button operation-save" bindtap="saveTask">
+    <view wx:if="{{ localFiles.length != 0 }}" class="operation-button operation-save" bindtap="saveTask">
       <image class="operation-icon" src="/assets/save.png"/>
       <text>保存作业</text>
+    </view>
+    <view wx:else class="operation-button operation-save" bindtap="submitTask">
+      <image class="operation-icon" src="/assets/submit.png"/>
+      <text>提交作业</text>
     </view>
   </view>
   <template is="toast" data="{{toast}}"/>

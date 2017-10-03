@@ -9,7 +9,11 @@
     "pages/writeonDetail/index",
     "pages/my/index",
     "pages/task/index",
-    "pages/taskDetail/index"
+    "pages/taskDetail/index",
+    "pages/password/index",
+    "pages/phone/index",
+    "pages/enrollment/index",
+    "pages/classSelector/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -1,7 +1,7 @@
 page {
   background-color: #f0f0f0;
   font-size: 30rpx;
-  color: #131313;
+  color: #121212;
 }
 
 .container {
@@ -29,22 +29,5 @@ page {
   flex-direction: column;
   background-color: #fff;
   margin-top: 20rpx;
-  padding: 0 20rpx;
   color: #707070;
-}
-
-.list .item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 90rpx;
-  line-height: 90rpx;
-  border-bottom: 1rpx solid #f0f0f0;
-}
-
-.list .item text {
-  min-width: 130rpx;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }

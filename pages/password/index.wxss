@@ -1,0 +1,26 @@
+.field-item {
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  background-color: #fff;
+  color: #121212;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.field-item .field-item-input {
+  flex: 1;
+}
+
+.field-item .field-item-clear {
+  display: flex;
+}
+
+.field-item-button {
+  margin-top: 20rpx;
+  padding: 20rpx;
+}

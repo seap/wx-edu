@@ -1,0 +1,32 @@
+.class-item {
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20rpx;
+  height: 100rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+  background-color: #fff;
+  color: #121212;
+  font-size: 28rpx;
+}
+
+.class-item .class-item-value {
+  flex: 1;
+}
+
+.class-item .class-item-remain {
+  color: #666;
+  font-size: 24rpx;
+}
+
+.class-item .class-item-remain-number {
+  color: #666;
+  font-size: 32rpx;
+}
+
+.class-item .class-item-icon {
+  width: 30rpx;
+  height: 30rpx;
+}

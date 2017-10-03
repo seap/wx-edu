@@ -6,7 +6,7 @@
   </view>
   <view class="shortcut">
     <view 
-      class="cell {{index % 2 == 0 ? 'leftCell' : ''}}" 
+      class="shortcut-cell {{index % 2 == 0 ? 'shortcut-left-cell' : ''}}" 
       wx:for="{{shortcuts}}" 
       wx:key="*this"
       data-link="{{item.link}}"

@@ -9,6 +9,10 @@ page {
   padding: 20rpx;
 }
 
+.task-placeholder {
+  margin-top: 120rpx;
+}
+
 .operation {
   display: flex;
   align-items: center;
@@ -46,55 +50,40 @@ page {
   background-color: #fff;
 }
 
-.voice-header {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  height: 90rpx;
-  background-color: #fff;
-  margin-top: 20rpx;
-  border-bottom: 1rpx solid #E6E6E6;
-}
-
-.voice-header-title {
-  margin:0 20rpx;
-}
-
-.voice-item {
+.text-item {
   display: flex;
   align-items: center;
   width: 100%;
   height: 80rpx;
   background-color: #fff;
   border-bottom: 1rpx solid #f0f0f0;
-  color: #707070;
   font-size: 28rpx;
 }
 
-.voice-item .voice-item-icon {
-  display: flex;
-  align-items: center;
+.text-item-header {
+  margin-top: 20rpx;
 }
 
-.voice-item .voice-item-icon image{
-  width: 40rpx;
-  height: 40rpx;
+.text-item .text-item-icon {
+  display: flex;
+  align-items: center;
+  height: 80rpx;
+}
+
+.text-item .text-item-icon image{
+  width: 32rpx;
+  height: 32rpx;
   margin: 0 20rpx;
 }
 
-.voice-item .voice-item-name {
+.text-item .text-item-name {
   flex: 1;
 }
 
-.text-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 90rpx;
-  line-height: 90rpx;
-  background-color: #fff;
-  padding: 0 20rpx;
-  border-bottom: 1rpx solid #f0f0f0;
+.text-item .text-item-value {
+  flex: 1;
+  text-align: right;
+  margin: 0 20rpx;
 }
 
 .text-item text {
@@ -102,4 +91,8 @@ page {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.text-item .text-item-result {
+  color: #1aad19;
 }

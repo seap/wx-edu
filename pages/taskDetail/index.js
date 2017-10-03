@@ -1,18 +1,63 @@
 const request = require('../../common/request')
-const { API_TASK_DETAIL, API_FILE_UPLOAD } = require('../../common/constants')
+const { API_TASK_DETAIL, API_TASK_SAVE, API_TASK_SUBMIT, API_FILE_UPLOAD } = require('../../common/constants')
 const { formatDate } = require('../../common/util')
+
+// 上传本地录音文件
+let remoteFiles = []
+function uploadFiles(localFiles, success, fail) {
+  if (localFiles && localFiles.length === 0) {
+    return success(remoteFiles)
+  }
+  const { filePath, name } = localFiles[0]
+  wx.uploadFile({
+    url: API_FILE_UPLOAD,
+    filePath,
+    name: 'file',
+    formData:{
+      name
+    },
+    success: res => {
+      // console.log('upload success: ', res)
+      if (!res || !res.data) {
+        return fail()
+      }
+      try {
+        const obj = JSON.parse(res.data)
+        if (!obj || !obj.filename) {
+          return fail()
+        }
+        remoteFiles.push({
+          name,
+          student_answer: obj.filename
+        })
+        uploadFiles(localFiles.slice(1), success, fail)
+      } catch (error) {
+        return fail()
+      }
+      
+    },
+    fail: err => {
+      return fail()
+    }
+  })
+}
 
 Page({
   data: {
     recording: false,
     localFiles: [],
+    student_answers: [], // 学生回答,远程文件
     toast: ''
   },
-
+  toastCursor: 0,
   showToast: function (toast, duration = 1500) {
+    this.toastCursor++
     this.setData({ toast })
     setTimeout(() => {
-      this.setData({ toast: '' })
+      this.toastCursor--
+      if (this.toastCursor === 0) {
+        this.setData({ toast: '' })
+      }
     }, duration)
   },
 
@@ -29,29 +74,88 @@ Page({
   },
 
   saveTask: function() {
+    const { recording } = this.data
+    if (recording) {
+      return this.showToast('正在录音中，请先结束录音')
+    }
     this.uploadLocalFiles()
   },
 
+  submitTask: function() {
+    const { recording, task_id, localFiles, student_answers } = this.data
+    if (recording) {
+      return this.showToast('正在录音中，请先结束录音')
+    }
+    if (student_answers.length == 0) {
+      return this.showToast('没有任何作业，无法提交')
+    }
+    wx.showModal({
+      title: '提示',
+      content: '作业提交后将无法修改，确认提交？',
+      success: res => {
+        if (res.confirm) {
+          request({
+            url: API_TASK_SUBMIT,
+            method: 'POST',
+            header: {
+              'content-type': 'application/x-www-form-urlencoded' // 默认值
+            },
+            data: {
+              openId: 'onhx6xBFsBnkS3-FPqtp1VZ3YM9U', 
+              taskId: task_id,
+              studentAnswers: JSON.stringify(student_answers)
+            },
+            success: json => {
+              this.setData({
+                ...json.data,
+                createDate: formatDate(new Date(json.data.create_date * 1000), 'yyyy-MM-dd hh:mm:ss'),
+              })
+              this.showToast('提交成功')
+              setTimeout(() => {
+                wx.navigateBack({ delta: 1 })
+              }, 1600)
+            }
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })  
+  },
+
   uploadLocalFiles: function() {
-    const { localFiles } = this.data
-    localFiles.forEach(ele => {
-      const { filePath, name } = ele
-      wx.uploadFile({
-        url: API_FILE_UPLOAD, //仅为示例，非真实的接口地址
-        filePath,
-        name: 'file',
-        formData:{
-          name
+    const { task_id, localFiles, student_answers } = this.data
+    remoteFiles = []
+    uploadFiles(localFiles, files => {
+      // 上传成功
+      console.log('本地文件上传成功')
+      const latestAnswers = [...student_answers, ...files]
+      // this.setData({
+      //   localFiles: [],
+      //   student_answers: latestAnswers
+      // })
+      request({
+        url: API_TASK_SAVE,
+        method: 'POST',
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' // 默认值
         },
-        success: function(res){
-          console.log('upload success: ', res)
-          var data = res.data
-          //do something
+        data: {
+          openId: 'onhx6xBFsBnkS3-FPqtp1VZ3YM9U', 
+          taskId: task_id,
+          studentAnswers: JSON.stringify(latestAnswers)
         },
-        fail: err => {
-          console.log(err)
+        success: json => {
+          this.setData({
+            localFiles: [],
+            ...json.data,
+            createDate: formatDate(new Date(json.data.create_date * 1000), 'yyyy-MM-dd hh:mm:ss'),
+          })
+          this.showToast('保存成功')
         }
       })
+    }, () => {
+      this.showToast('上传失败')
     })
   },
 
@@ -62,19 +166,21 @@ Page({
       this.setData({
         recording: true
       })
+      this.showToast('录音开始')
       wx.startRecord({
         success: res => {
           const tempFilePath = res.tempFilePath 
           console.log('res: ', res)
           this.addLocalFile({
-            name: 'VOICE - ' + formatDate(new Date(), 'yyyy-MM-dd hh:mm:ss'),
+            name: 'VOICE ' + formatDate(new Date(), 'yyyy-MM-dd hh:mm:ss'),
             filePath: tempFilePath
           })
         },
         fail: function(res) {
-           //录音失败
+          // 录音失败
         },
         complete: () => {
+          this.showToast('录音结束')
           this.setData({ recording: false })
         }
       })
@@ -103,7 +209,7 @@ Page({
     wx.playBackgroundAudio({
       dataUrl: filepath,
       success: () => {
-        this.showToast('播放成功')
+        this.showToast('播放录音')
         console.log('play success ')
       },
       fail: err => {
@@ -120,11 +226,51 @@ Page({
     })
   },
 
+  removeRemoteFile: function(e) {
+    wx.showModal({
+      title: '提示',
+      content: '确认删除此条录音记录？',
+      success: res => {
+        if (res.confirm) {
+          const { index } = e.currentTarget.dataset
+          const { student_answers } = this.data
+          student_answers.splice(index, 1)
+          this.setData({ student_answers })
+          this.showToast('删除成功')
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })   
+  },
+
   removeLocalFile: function(e) {
-    const { index } = e.currentTarget.dataset
-    const { localFiles } = this.data
-    localFiles.splice(index, 1)
-    this.setData({ localFiles })
+    wx.showModal({
+      title: '提示',
+      content: '确认删除此条录音记录？',
+      success: res => {
+        if (res.confirm) {
+          const { index } = e.currentTarget.dataset
+          const { localFiles } = this.data
+          const deletedFiles = localFiles.splice(index, 1)
+          this.setData({ localFiles })
+          this.showToast('删除成功')
+          // 手机上测试，发现只是临时文件，无法删除
+          // wx.removeSavedFile({
+          //   filePath: deletedFiles[0].filePath,
+          //   success: () => {
+          //     this.setData({ localFiles })
+          //     this.showToast('删除成功')
+          //   },
+          //   fail: err => {
+          //     console.log('remove file failed: ', err)
+          //   }
+          // })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })    
   },
 
   onLoad: function (options) {

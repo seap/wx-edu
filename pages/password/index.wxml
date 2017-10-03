@@ -1,0 +1,48 @@
+<import src="../../templates/toast.wxml"/>
+<view class="container">
+  <view class="field-item">
+    <input
+      id="oldPassword"
+      class="field-item-input"
+      bindinput="bindInput"
+      value="{{oldPassword}}"
+      type="password" 
+      maxlength="30" 
+      placeholder="请输入旧密码" 
+    />
+    <icon id="oldPassword" wx-if="{{oldPassword !== ''}}" class="field-item-clear" type="clear" size="15" bindtap="bindClearTap"/>
+  </view>
+  <view class="field-item">
+    <input
+      id="newPassword"
+      class="field-item-input"
+      bindinput="bindInput"
+      value="{{newPassword}}"
+      type="password" 
+      maxlength="30" 
+      placeholder="请输入新密码" 
+    />
+    <icon id="newPassword" wx-if="{{newPassword !== ''}}" class="field-item-clear" type="clear" size="15" bindtap="bindClearTap"/>
+  </view>
+  <view class="field-item">
+    <input
+      id="confirmedPassword"
+      class="field-item-input"
+      bindinput="bindInput"
+      value="{{confirmedPassword}}"
+      type="password" 
+      maxlength="30" 
+      placeholder="请确认新密码" 
+    />
+    <icon id="confirmedPassword" wx-if="{{confirmedPassword !== ''}}" class="field-item-clear" type="clear" size="15" bindtap="bindClearTap"/>
+  </view>
+  <view class="field-item-button">
+    <button 
+      type="primary" 
+      bindtap="bindSubmitTap"
+      disabled="{{ oldPassword === '' || newPassword === '' || confirmedPassword === ''}}"
+    >确认
+    </button>
+  </view>
+  <template is="toast" data="{{toast}}"/>
+</view>

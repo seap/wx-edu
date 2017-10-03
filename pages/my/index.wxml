@@ -5,25 +5,25 @@
     <text class="userinfo-nickname">{{userInfo.nickName}}</text>
   </view>
   <view class="list">
-    <view class="item">
+    <view class="field-item">
       <text>学号</text>
-      <text>{{member.student_no}}</text>
+      <text class="field-item-value">{{member.student_no}}</text>
     </view>
-    <view class="item">
+    <view class="field-item">
       <text>学生姓名</text>
-      <text>{{member.student_name}}</text>
+      <text class="field-item-value">{{member.student_name}}</text>
     </view>
-    <view class="item">
+    <view class="field-item">
       <text>家长姓名</text>
-      <text>{{member.parent_name}}</text>
+      <text class="field-item-value">{{member.parent_name}}</text>
     </view>
-    <view class="item">
+    <view class="field-item">
       <text>手机号</text>
-      <text>{{member.phone}}</text>
+      <text class="field-item-value">{{member.phone}}</text>
     </view>
-    <view class="item">
+    <view class="field-item">
       <text>所在班级</text>
-      <text>{{member.clazz_name}}</text>
+      <text class="field-item-value">{{member.clazz_name}}</text>
     </view>
   </view>
   <template is="toast" data="{{toast}}"/>
