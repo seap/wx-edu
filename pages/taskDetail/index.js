@@ -47,6 +47,7 @@ Page({
     recording: false,
     localFiles: [],
     student_answers: [], // 学生回答,远程文件
+    countdown: 0, // 录音倒计时
     toast: ''
   },
   toastCursor: 0,
@@ -158,7 +159,35 @@ Page({
       this.showToast('上传失败')
     })
   },
-
+  startCounting: function() {
+    
+    this.setData({
+      countdown: 60
+    }, () => {
+      this.timer = setInterval(() => {
+        let { countdown } = this.data
+        // console.log('countdown: ', countdown)
+        if (countdown > 0) {
+          this.setData({
+            countdown: --countdown
+          })
+        } else {
+          clearInterval(this.timer)
+          this.timer = null
+        }
+      }, 1000)
+    })
+  },
+  stopCounting: function() {
+    if (this.timer) {
+      clearInterval(this.timer)
+      this.timer = null
+    }
+    this.setData({
+      recording: false,
+      countdown: 0
+    })
+  },
   bindRecordTap: function() {
     console.log('bindRecordTap')
     const { recording } = this.data
@@ -167,29 +196,31 @@ Page({
         recording: true
       })
       this.showToast('录音开始')
+      this.startCounting()
       wx.startRecord({
         success: res => {
           const tempFilePath = res.tempFilePath 
-          console.log('res: ', res)
           this.addLocalFile({
             name: 'VOICE ' + formatDate(new Date(), 'yyyy-MM-dd hh:mm:ss'),
             filePath: tempFilePath
           })
+          this.showToast('录音结束')
+          this.stopCounting()
         },
         fail: function(res) {
           // 录音失败
+          this.showToast('录音失败')
+          this.stopCounting()
+          console.log(res)
         },
         complete: () => {
-          this.showToast('录音结束')
           this.setData({ recording: false })
         }
       })
     } else {
       console.log('stop record')
       wx.stopRecord()
-      this.setData({
-        recording: false
-      })
+      this.stopCounting()
     }
   },
 
@@ -210,7 +241,6 @@ Page({
       dataUrl: filepath,
       success: () => {
         this.showToast('播放录音')
-        console.log('play success ')
       },
       fail: err => {
         this.showToast('播放失败')

@@ -22,8 +22,8 @@
 }
 
 .class-item .class-item-remain-number {
-  color: #666;
-  font-size: 32rpx;
+  color: #1aad19;
+  font-size: 24rpx;
 }
 
 .class-item .class-item-icon {

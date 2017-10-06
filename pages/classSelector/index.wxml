@@ -2,7 +2,7 @@
   <view class="class-item-value">
     <view>{{item.clazz_name}}</view>
     <view class="class-item-remain">剩余名额
-     <text class="class-item-remain-number">{{item.remain}}</text>
+     <text class="class-item-remain-number">{{item.remain}}名</text>
     </view>
   </view>
   <image class="class-item-icon" src="/assets/enter.png" />

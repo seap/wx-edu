@@ -39,9 +39,17 @@ page {
 }
 
 .operation .operation-record {
+  position: relative;
   color: #fff;
   background-color: #1aad19;
 }
+
+.operation .operation-countdown {
+  position: absolute;
+  left: 20rpx;
+  color: #fff;
+}
+
 .operation .operation-stop {
   color: #d81e06;
 }

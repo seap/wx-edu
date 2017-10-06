@@ -1,6 +1,7 @@
 // const API_HOST = 'http://w.jenniferstudio.cn/english'
 const API_HOST = 'https://w.jenniferstudio.cn'
-
+// 登录接口
+const API_USER_LOGIN = 'http://w.seayang.me/api/wechat/login'
 // 我的班级
 const API_CLASS = `${API_HOST}/webservice/student/query_clazz`
 // 全部班级
@@ -29,6 +30,7 @@ const API_PHONE_UPDATE = `${API_HOST}/webservice/student/update_phone`
 
 module.exports = {
   API_HOST,
+  API_USER_LOGIN,
   API_CLASS,
   API_CLASS_LIST,
   API_CLASS_ENROLL,
