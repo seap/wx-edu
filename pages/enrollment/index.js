@@ -26,20 +26,25 @@ Page({
   },
 
   bindSubmitTap: function() {
-    if (this.classId == '') {
+    const { classId } = this.data 
+    if (classId == '') {
       return this.showToast('请选择报名班级')
     }
     
     request({
-      url: `${API_CLASS_ENROLL}?openId=onhx6xBFsBnkS3-FPqtp1VZ3YM9U`,
+      url: API_CLASS_ENROLL,
+      data: {
+        clazzId: classId
+      },
       success: json => {
         try {
           wx.removeStorageSync('select-class')
-        } catch (e) {
-          this.showToast('报名成功')
+          this.showToast('报名成功，请等待审核')
           setTimeout(() => {
             wx.navigateBack({ delta: 1 })
           }, 1600)
+        } catch (e) {
+          
         }
       }
     })
@@ -61,7 +66,7 @@ Page({
 
   onLoad: function() {
     request({
-      url: `${API_MEMBER_INFO}?openId=onhx6xBFsBnkS3-FPqtp1VZ3YM9U`,
+      url: API_MEMBER_INFO,
       success: json => {
         this.setData({
           member: json.data

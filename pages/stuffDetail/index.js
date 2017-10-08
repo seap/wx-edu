@@ -38,7 +38,10 @@ Page({
   },
   fetchData: function(stuffId) {
     request({
-      url: `${API_STUFF_DETAIL}?openId=onhx6xBFsBnkS3-FPqtp1VZ3YM9U&stuffId=${stuffId}`,
+      url: API_STUFF_DETAIL,
+      data: {
+        stuffId
+      },
       success: json => {
         let audioIndex = 0, pdfIndex = 0
         const list = json.data.stuff_attach.map(ele => {

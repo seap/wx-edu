@@ -21,7 +21,10 @@ Page({
   },
   fetchData: function(id) {
     request({
-      url: `${API_NOTICE_DETAIL}?openId=onhx6xBFsBnkS3-FPqtp1VZ3YM9U&noticeId=${id}`,
+      url: API_NOTICE_DETAIL,
+      data: {
+        noticeId: id
+      },
       success: json => {
         this.setData({
           name: json.data.name,

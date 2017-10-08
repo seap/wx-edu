@@ -28,7 +28,10 @@ Page({
   },
   fetchData: function(id) {
     request({
-      url: `${API_WRITEON_DETAIL}?openId=onhx6xBFsBnkS3-FPqtp1VZ3YM9U&writeonId=${id}`,
+      url: API_WRITEON_DETAIL,
+      data: {
+        writeonId: id
+      },
       success: json => {
         console.log(json)
         const imageList = json.data.writeon_attach.map(ele => ele.attach_url)

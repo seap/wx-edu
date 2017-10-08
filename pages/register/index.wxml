@@ -1,0 +1,64 @@
+<import src="../../templates/toast.wxml"/>
+<view class="container">
+  <view class="field-item">
+    <input
+      id="studentName"
+      class="field-item-input"
+      bindinput="bindInput"
+      value="{{studentName}}"
+      type="text" 
+      maxlength="10" 
+      placeholder="学生姓名" 
+    />
+    <icon id="studentName" wx-if="{{studentName !== ''}}" class="field-item-clear" type="clear" size="15" bindtap="bindClearTap"/>
+  </view>
+  <view class="field-item">
+    <input
+      id="parentName"
+      class="field-item-input"
+      bindinput="bindInput"
+      value="{{parentName}}"
+      type="text" 
+      maxlength="10" 
+      placeholder="家长姓名" 
+    />
+    <icon id="parentName" wx-if="{{parentName !== ''}}" class="field-item-clear" type="clear" size="15" bindtap="bindClearTap"/>
+  </view>
+  <view class="field-item">
+    <input
+      id="phone"
+      class="field-item-input"
+      bindinput="bindInput"
+      value="{{phone}}"
+      type="number" 
+      maxlength="11" 
+      placeholder="手机号" 
+    />
+    <icon id="phone" wx-if="{{phone !== ''}}" class="field-item-clear" type="clear" size="15" bindtap="bindClearTap"/>
+  </view>
+  <view class="field-item">
+    <input
+      id="password"
+      class="field-item-input"
+      bindinput="bindInput"
+      value="{{password}}"
+      type="password" 
+      maxlength="30"
+      placeholder="密码" 
+    />
+    <icon id="password" wx-if="{{password !== ''}}" class="field-item-clear" type="clear" size="15" bindtap="bindClearTap"/>
+  </view>
+  
+  <view class="field-item-button">
+    <button 
+      type="primary" 
+      bindtap="bindSubmitTap"
+      disabled="{{!studentName || !parentName || !phone || !password }}"
+    >确认
+    </button>
+  </view>
+  <view class="info" bindtap="bindRegister">
+    <text>已有学号，请直接绑定</text>
+  </view>
+  <template is="toast" data="{{toast}}"/>
+</view>

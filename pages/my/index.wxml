@@ -23,7 +23,7 @@
     </view>
     <view class="field-item">
       <text>所在班级</text>
-      <text class="field-item-value">{{member.clazz_name}}</text>
+      <text class="field-item-value">{{member.clazz_name || '暂无班级'}}</text>
     </view>
   </view>
   <template is="toast" data="{{toast}}"/>

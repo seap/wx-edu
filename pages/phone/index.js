@@ -40,12 +40,11 @@ Page({
       return this.showToast('请输入正确的手机号')
     }
     request({
-      url: `${API_PHONE_UPDATE}?openId=onhx6xBFsBnkS3-FPqtp1VZ3YM9U&phone=${phone}`,
+      url: API_PHONE_UPDATE,
+      data: {
+        phone
+      },
       success: json => {
-        // wx.showToast({
-        //   title: '修改成功',
-        //   icon: 'success'
-        // })
         this.showToast('修改成功')
         setTimeout(() => {
           wx.navigateBack({ delta: 1 })

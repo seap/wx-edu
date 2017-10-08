@@ -1,6 +1,6 @@
 const request = require('../../common/request')
 const { API_STUFF } = require('../../common/constants')
-const { formatDate } = require('../../common/util')
+const { formatDate, askForEnrollment } = require('../../common/util')
 const app = getApp()
 
 Page({
@@ -30,7 +30,10 @@ Page({
 
   fetchList: function(id) {
     request({
-      url: `${API_STUFF}?openId=onhx6xBFsBnkS3-FPqtp1VZ3YM9U&clazzId=${id}`,
+      url: API_STUFF,
+      data: {
+        clazzId: id
+      },
       success: json => {
         this.setData({
           stuffList: json.data.map(ele => {
@@ -48,9 +51,11 @@ Page({
     })
     if (classList[0]) {
       this.fetchList(classList[0].clazz_id)
+    } else {
+      askForEnrollment()
     }
   },
-  
+
   onLoad: function() {
     if (app.globalData.classList) {
       this.initClassList(app.globalData.classList)

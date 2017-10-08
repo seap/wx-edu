@@ -12,7 +12,7 @@ Page({
 
   fetchList: function() {
     request({
-      url: `${API_CLASS_LIST}?openId=onhx6xBFsBnkS3-FPqtp1VZ3YM9U`,
+      url: API_CLASS_LIST,
       success: json => {
         this.setData({
           list: json.data
@@ -25,7 +25,6 @@ Page({
     const { list } = this.data
     const { index } = e.currentTarget.dataset
     const { clazz_name, id } = list[index]
-    console.log('id: ', id)
     try {
       wx.setStorageSync('select-class', {
         name: clazz_name, 

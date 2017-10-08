@@ -1,0 +1,51 @@
+<import src="../../templates/toast.wxml"/>
+<view class="container">
+  <view class="field-item">
+    <input
+      id="id"
+      class="field-item-input"
+      bindinput="bindInput"
+      value="{{id}}"
+      type="number" 
+      maxlength="14" 
+      placeholder="学号" 
+    />
+    <icon id="id" wx-if="{{id !== ''}}" class="field-item-clear" type="clear" size="15" bindtap="bindClearTap"/>
+  </view>
+  <view class="field-item">
+    <input
+      id="password"
+      class="field-item-input"
+      bindinput="bindInput"
+      value="{{password}}"
+      type="password" 
+      maxlength="30" 
+      placeholder="密码" 
+    />
+    <icon id="password" wx-if="{{password !== ''}}" class="field-item-clear" type="clear" size="15" bindtap="bindClearTap"/>
+  </view>
+  <view class="field-item">
+    <input
+      id="remark"
+      class="field-item-input"
+      bindinput="bindInput"
+      value="{{remark}}"
+      type="text" 
+      maxlength="50" 
+      placeholder="备注" 
+    />
+    <icon id="remark" wx-if="{{remark !== ''}}" class="field-item-clear" type="clear" size="15" bindtap="bindClearTap"/>
+  </view>
+  <view class="field-item-button">
+    <button 
+      type="primary" 
+      bindtap="bindSubmitTap"
+      disabled="{{!id || !password}}"
+    >确认
+    </button>
+  </view>
+  <view class="info" bindtap="bindRegister">
+    <text>没有学号，请注册</text>
+  </view>
+  <template is="toast" data="{{toast}}"/>
+</view>

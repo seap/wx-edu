@@ -4,27 +4,9 @@ const { API_MEMBER_INFO } = require('../../common/constants')
 const app = getApp()
 
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
     userInfo: null,
     member: null
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
   },
 
   onLoad: function (options) {
@@ -44,7 +26,7 @@ Page({
       })
     }
     request({
-      url: `${API_MEMBER_INFO}?openId=onhx6xBFsBnkS3-FPqtp1VZ3YM9U`,
+      url: API_MEMBER_INFO,
       success: json => {
         this.setData({
           member: json.data

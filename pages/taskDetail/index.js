@@ -64,7 +64,10 @@ Page({
 
   fetchData: function(id) {
     request({
-      url: `${API_TASK_DETAIL}?openId=onhx6xBFsBnkS3-FPqtp1VZ3YM9U&taskId=${id}`,
+      url: API_TASK_DETAIL,
+      data: {
+        taskId: id
+      },
       success: json => {
         this.setData({
           ...json.data,

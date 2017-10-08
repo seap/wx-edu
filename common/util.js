@@ -32,7 +32,22 @@ function parseSecond(second) {
   return minFill + min + ':' + secFill + sec
 }
 
+function askForEnrollment() {
+  wx.showModal({
+    title: '提示',
+    content: '当前没有班级，进入班级报名?',
+    success: function(res) {
+      if (res.confirm) {
+        wx.redirectTo({
+          url: '/pages/enrollment/index'
+        })
+      }
+    }
+  })
+}
+
 module.exports = {
   formatDate,
-  parseSecond
+  parseSecond,
+  askForEnrollment
 }

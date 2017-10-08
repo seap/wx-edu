@@ -1,6 +1,6 @@
 const request = require('../../common/request')
 const { API_CLASS, API_WRITEON } = require('../../common/constants')
-const { formatDate } = require('../../common/util')
+const { formatDate, askForEnrollment } = require('../../common/util')
 const app = getApp()
 
 Page({
@@ -27,7 +27,10 @@ Page({
   },
   fetchList: function (id) {
     request({
-      url: `${API_WRITEON}?openId=onhx6xBFsBnkS3-FPqtp1VZ3YM9U&clazzId=${id}`,
+      url: API_WRITEON,
+      data: {
+        clazzId: id
+      },
       success: json => {
         this.setData({
           list: json.data.map(ele => {
@@ -44,6 +47,8 @@ Page({
     })
     if (classList[0]) {
       this.fetchList(classList[0].clazz_id)
+    } else {
+      askForEnrollment()
     }
   },
   onLoad: function() {

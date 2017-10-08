@@ -1,6 +1,6 @@
 const request = require('../../common/request')
 const { API_TASK } = require('../../common/constants')
-const { formatDate } = require('../../common/util')
+const { formatDate, askForEnrollment } = require('../../common/util')
 const app = getApp()
 
 // task status: nocom: 待完成, corre: 已提交待批改, compl: 已完成
@@ -44,7 +44,10 @@ Page({
 
   fetchList: function(id) {
     request({
-      url: `${API_TASK}?openId=onhx6xBFsBnkS3-FPqtp1VZ3YM9U&clazzId=${id}`,
+      url: API_TASK,
+      data: {
+        clazzId: id
+      },
       success: json => {
         this.list = json.data.map(ele => {
           ele.createDate = formatDate(new Date(ele.create_date * 1000), 'yyyy-MM-dd hh:mm:ss')
@@ -67,6 +70,8 @@ Page({
     })
     if (classList[classIndex]) {
       this.fetchList(classList[classIndex].clazz_id)
+    } else {
+      askForEnrollment()
     }
   },
 

@@ -13,7 +13,9 @@
     "pages/password/index",
     "pages/phone/index",
     "pages/enrollment/index",
-    "pages/classSelector/index"
+    "pages/classSelector/index",
+    "pages/bind/index",
+    "pages/register/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

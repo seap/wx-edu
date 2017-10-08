@@ -1,4 +1,5 @@
-const { API_USER_LOGIN, API_USER_REGISTER } = require('./constants')
+const { API_USER_LOGIN, API_USER_REGISTER, APP_ID } = require('./constants')
+const request = require('./request')
 
 function login(success = () => {}, fail = () => {}) {
   wx.showLoading({ title: '登录中' })
@@ -14,21 +15,23 @@ function login(success = () => {}, fail = () => {}) {
         url: API_USER_LOGIN,
         data: {
           code: res.code,
-          appid: appId
+          appid: APP_ID
         },
         showLoading: false,
         success: json => {
           wx.hideLoading()
-          const { skey, uid } = json.data
-          setStorage({ skey, uid }, success)
-        },
-        noLogin: json => {
-          if (json.errno == 3520 && json.data && json.data.openid) {
-            // 未绑定用户，拿不到unionid
-            loginWithUnionid(success, fail, json.data.openid)
+          const { openid } = json.data
+          console.log('openid: ', openid)
+          if (openid) {
+            wx.setStorage({
+              key: 'token',
+              data: openid,
+              success: () => {
+                success(openid)
+              }
+            })
           } else {
-            wx.hideLoading()
-            fail('接口异常')
+            fail('微信登录失败')
           }
         },
         fail: () => {
@@ -44,6 +47,20 @@ function login(success = () => {}, fail = () => {}) {
   })
 }
 
+function checkLogin(success, fail) {
+  try {
+    const token = wx.getStorageSync('token')
+    if (!token) {
+      login(success, fail)
+    } else {
+      success(token)
+    }
+  } catch (e) {
+    fail(e)
+  }
+}
+
 module.exports = {
-  login
+  login,
+  checkLogin
 }

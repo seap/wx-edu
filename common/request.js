@@ -9,9 +9,9 @@ function alert(content) {
 function request(option) {
   const {
     url,
-    data,
+    data = {},
     header = {
-      'content-type': 'application/x-www-form-urlencoded'
+      'content-type': 'application/x-www-form-urlencoded',
     },
     method = 'GET',
     showLoading = true,
@@ -25,6 +25,20 @@ function request(option) {
     return false
   }
   showLoading && wx.showLoading({ title: '加载中' })
+  
+  try {
+    const token = wx.getStorageSync('token')
+    if (token) {
+      header.token = token
+      // data.openId = token
+    } else {
+      console.log('用户未登录')
+    }
+  } catch (error) {
+    console.log('get token fail, ', error)
+    fail(error)
+  }
+
   wx.request({
     url,
     data,
@@ -32,8 +46,13 @@ function request(option) {
     method,
     success: res => {
       showLoading && wx.hideLoading()
-      if (isSuccess(res.data) || res.data.errno == 0) {
+      if (isSuccess(res.data) || res.data.errno == 0 || res.data.code == 0) {
         success(res.data)
+      } else if (res.data && res.data.errno == 14) {
+        // 用户没有绑定
+        wx.redirectTo({
+          url: '/pages/bind/index'
+        })
       } else if (res.data && typeof res.data.errmsg === 'string') {
         alert(res.data.errmsg)
       } else {

@@ -1,10 +1,18 @@
 const player = require('./common/player')
 const { API_CLASS } = require('./common/constants')
 const request = require('./common/request')
+const { checkLogin } = require('./common/passport')
 
-//app.js
 App({
   onLaunch: function () {
+    // 判断登录
+    checkLogin(token => {
+      this.globalData.token = token
+      this.fetchClassList()
+    }, err => {
+      console.log('check login failed, ', err)
+    })
+
     wx.getUserInfo({
       success: res => {
         // 可以将 res 发送给后台解码出 unionId
@@ -16,20 +24,21 @@ App({
         }
       }
     })
-    this.fetchClassList()
   },
+
   // 获取班级列表
   fetchClassList: function() {
     request({
-      url: `${API_CLASS}?openId=onhx6xBFsBnkS3-FPqtp1VZ3YM9U`,
+      url: API_CLASS,
       success: json => {
-        this.globalData.classList = json.data.sort((a, b) => a.clazz_id > b.clazz_id)
+        this.globalData.classList = json.data //.sort((a, b) => a.clazz_id > b.clazz_id)
         if (this.classListCallback) {
           this.classListCallback(json.data)
         }
       }
     })
   },
+
   globalData: {
     userInfo: null,
     classList: null

@@ -42,12 +42,12 @@ Page({
       return this.showToast('确认密码不一致')
     }
     request({
-      url: `${API_PASSWORD_UPDATE}?openId=onhx6xBFsBnkS3-FPqtp1VZ3YM9U&newpwd=${newPassword}&oldpwd=${oldPassword}`,
+      url: API_PASSWORD_UPDATE,
+      data: {
+        newpwd: newPassword,
+        oldpwd: oldPassword
+      },
       success: json => {
-        // wx.showToast({
-        //   title: '修改成功',
-        //   icon: 'success'
-        // })
         this.showToast('修改成功')
         setTimeout(() => {
           wx.navigateBack({ delta: 1 })
