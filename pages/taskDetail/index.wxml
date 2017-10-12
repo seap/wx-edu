@@ -1,14 +1,14 @@
 <import src="../../templates/toast.wxml"/>
 <view class="container">
-  <view class="header">
+  <view class="header" wx-if="{{!!task_name}}">
     <view class="name">{{task_name}}</view>
     <view class="date">{{createDate}}</view>
   </view>
-  <view class="content">
+  <view class="content" wx-if="{{!!task_content}}">
     <rich-text nodes="{{task_content}}" ></rich-text>
   </view>
   
-  <view class="text-item text-item-header">
+  <view class="text-item text-item-header" wx-if="{{!!task_name}}">
     <view class="text-item-icon"><image src="/assets/student.png"/></view>
     <text>学生回答</text>
   </view>

@@ -1,6 +1,6 @@
 <import src="../../templates/toast.wxml"/>
 <view class="container">
-  <view class="field-item">
+  <view class="field-item header">
     <input
       id="phone"
       class="field-item-input"

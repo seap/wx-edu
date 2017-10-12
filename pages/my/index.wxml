@@ -23,7 +23,11 @@
     </view>
     <view class="field-item">
       <text>所在班级</text>
-      <text class="field-item-value">{{member.clazz_name || '暂无班级'}}</text>
+      <text class="field-item-value">{{member.clazz_name_able || '暂无班级'}}</text>
+    </view>
+    <view class="field-item">
+      <text>申请班级</text>
+      <text class="field-item-value" wx-if="{{member.clazz_name_review}}" >{{member.clazz_name_review || '暂无班级'}}</text>
     </view>
   </view>
   <template is="toast" data="{{toast}}"/>

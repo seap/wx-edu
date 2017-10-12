@@ -1,6 +1,6 @@
 <import src="../../templates/toast.wxml"/>
 <view class="container">
-  <view class="field-item">
+  <view class="field-item header">
     <text>学号</text>
     <text class="field-item-value">{{member.student_no}}</text>
   </view>
