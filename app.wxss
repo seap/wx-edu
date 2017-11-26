@@ -240,6 +240,18 @@ page {
   -webkit-box-orient: vertical;
 }
 
+.field-item .field-item-multi-value {
+  flex: 1;
+  text-align: right;
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  font-size: 26rpx;
+}
+
 .field-item .field-item-holder {
   color: #999;
 }

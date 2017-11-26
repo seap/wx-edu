@@ -5,7 +5,7 @@
     <view class="date">{{createDate}}</view>
   </view>
   <view class="content" wx-if="{{!!task_content}}">
-    <rich-text nodes="{{task_content}}" ></rich-text>
+    <rich-text nodes="{{task_content}}" selectable="true"></rich-text>
   </view>
   
   <view class="text-item text-item-header" wx-if="{{!!task_name}}">
@@ -41,10 +41,10 @@
       <text>评分</text>
       <text class="text-item-value">{{score}}</text>
     </view>
-    <view class="text-item">
+    <view class="multi-text-item">
       <view class="text-item-icon"><image src="/assets/remark.png"/></view>
       <text>备注</text>
-      <text class="text-item-value">{{corre_content}}</text>
+      <text class="text-item-value" selectable="true">{{corre_content}}</text>
     </view>
   </block>
 

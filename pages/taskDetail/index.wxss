@@ -104,3 +104,33 @@ page {
 .text-item .text-item-result {
   color: #1aad19;
 }
+
+
+.multi-text-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 80rpx;
+  line-height: 60rpx;
+  background-color: #fff;
+  border-bottom: 1rpx solid #f0f0f0;
+  font-size: 28rpx;
+}
+
+.multi-text-item .text-item-icon {
+  display: flex;
+  align-items: center;
+  height: 80rpx;
+}
+
+.multi-text-item .text-item-icon image{
+  width: 32rpx;
+  height: 32rpx;
+  margin: 0 20rpx;
+}
+
+.multi-text-item .text-item-value {
+  flex: 1;
+  text-align: right;
+  margin: 0 20rpx;
+}

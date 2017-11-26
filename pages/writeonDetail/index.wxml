@@ -6,7 +6,7 @@
     <view class="header-subtitle">{{createDate}}</view>
   </view>
   <view class="content">
-    <rich-text nodes="{{content}}"></rich-text>
+    <rich-text nodes="{{content}}" selectable="true"></rich-text>
     <view class="imagelist">
       <view class="imagelist-item" data-index="{{index}}" bindtap="bindItemTap" wx:for="{{list}}" wx:key="*this">
         <image src="{{item.attach_url_small}}" mode="scaleToFill"/>   
